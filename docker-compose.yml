@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  firewall:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  # Optional: run Next.js dashboard (needs node image + pnpm install first)
+  # frontend:
+  #   image: node:22-alpine
+  #   working_dir: /app
+  #   volumes:
+  #     - ./frontend:/app
+  #   ports:
+  #     - "3000:3000"
+  #   command: sh -c "corepack enable && pnpm install && pnpm dev --hostname 0.0.0.0"

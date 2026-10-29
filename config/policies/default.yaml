@@ -1,0 +1,59 @@
+version: "1.0.0"
+rules:
+  - id: "00000000-0000-0000-0000-000000000001"
+    name: "block_external_financial"
+    description: "Never send PAN, Aadhaar, account numbers, balances or cards to external tools"
+    natural_language: "Never send account numbers, balances, PAN or Aadhaar from bank statements to any external tool."
+    effect: deny
+    conditions:
+      data_types:
+        - ACCOUNT_NO
+        - PAN
+        - AADHAAR
+        - CREDIT_CARD
+        - BALANCE
+        - API_KEY
+      destinations:
+        - external
+      tools:
+        - "*"
+    priority: 10
+    enabled: true
+    version: "1.0.0"
+
+  - id: "00000000-0000-0000-0000-000000000002"
+    name: "require_approval_contact"
+    description: "Ask before sharing phone or email externally"
+    natural_language: "Ask me before any tool call that shares my phone number or email."
+    effect: require_approval
+    conditions:
+      data_types:
+        - PHONE_IN
+        - EMAIL
+      destinations:
+        - external
+      tools:
+        - "*"
+    priority: 20
+    enabled: true
+    version: "1.0.0"
+
+  - id: "00000000-0000-0000-0000-000000000003"
+    name: "redact_upi_external"
+    description: "Redact UPI IDs going external"
+    natural_language: "Redact UPI IDs when sending to external tools."
+    effect: redact
+    conditions:
+      data_types:
+        - UPI
+      destinations:
+        - external
+      tools:
+        - "*"
+    priority: 30
+    enabled: true
+    version: "1.0.0"
+
+metadata:
+  author: system
+  notes: Hardened seed policies v2
