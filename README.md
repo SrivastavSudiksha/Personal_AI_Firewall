@@ -195,7 +195,7 @@ pytest
 ## Team
 
 - **Sudiksha Srivastav** ([@SrivastavSudiksha](https://github.com/SrivastavSudiksha))
-- **Vedant Samadhiya** 
+- **Vedant Samadhiya** ([@ve-sam](https://github.com/ve-sam))
 
 ## License
 
